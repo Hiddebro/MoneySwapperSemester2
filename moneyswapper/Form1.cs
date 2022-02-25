@@ -22,7 +22,7 @@ namespace moneyswapper
 
             henk.OSRS = 100;
             henk.RS3 = 100000;
-            //rt
+            
             transfer.SwapRateToOSRS = 10;
             transfer.SwapRateToRS3 = 10;
 
