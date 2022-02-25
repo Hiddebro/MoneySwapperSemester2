@@ -22,14 +22,17 @@ namespace moneyswapper
 
             henk.OSRS = 100;
             henk.RS3 = 100000;
-            
+
             transfer.SwapRateToOSRS = 10;
             transfer.SwapRateToRS3 = 10;
 
             LbOsrsMoney.Text = henk.OSRS.ToString();
             LbRs3Money.Text = henk.RS3.ToString();
-        }
 
+            LbPreviewOsrsToRs3Swap.Text = "";
+            LbPreviewRs3ToOsrsSwap.Text = "";
+
+        }
 
         private void BtnOsrsToRs3_Click(object sender, EventArgs e)
         {
@@ -41,8 +44,8 @@ namespace moneyswapper
                     if (Convert.ToInt32(TbOsrsMoney.Text) != Convert.ToInt32(LbOsrsMoney.Text) && Convert.ToInt32(TbOsrsMoney.Text) >= Convert.ToInt32(LbOsrsMoney.Text))
                     {
                         MessageBox.Show("Not enough OSRS gold");
-                        TbOsrsMoney.Text = "";
-                        LbPreviewOsrsToRs3Swap.Text = "";
+                        updateOsrsMoneyText();
+
                     }
                     else
                     {
@@ -54,7 +57,7 @@ namespace moneyswapper
                 }
                 else
                 {
-                    // to-do foutmelding
+                    MessageBox.Show("Something went wrong please");
                 }
             }
         }
@@ -77,10 +80,6 @@ namespace moneyswapper
                     LbPreviewOsrsToRs3Swap.Text = transfer.TransferAmount.ToString();
 
                 }
-                else
-                {
-                    TbOsrsMoney.Text = "";
-                }
 
             }
         }
@@ -91,40 +90,45 @@ namespace moneyswapper
 
         private void BtnRs3ToOsrs_Click(object sender, EventArgs e)
         {
-            if (TbRs3Money.Text == "Rs3 amount")
+            if ((!String.IsNullOrEmpty(TbRs3Money.Text)) && (TbRs3Money.Text != "Rs3 amount"))
             {
-                return;
-            }
+                decimal result;
 
-            if (TbRs3Money.Text != "")
-            {
-                if (System.Text.RegularExpressions.Regex.IsMatch(TbRs3Money.Text, "[^0-9]"))
-                {
-                    TbRs3Money.Text = TbRs3Money.Text.Remove(TbRs3Money.Text.Length - 1);
-                }
 
-                if (Convert.ToInt32(TbRs3Money.Text) != Convert.ToInt32(LbRs3Money.Text) && Convert.ToInt32(TbRs3Money.Text) >= Convert.ToInt32(LbRs3Money.Text))
+                if (decimal.TryParse(TbRs3Money.Text, out result))
                 {
-                    MessageBox.Show("Not enough RS3 gold");
-                    TbRs3Money.Text = "";
-                    LbPreviewRs3ToOsrsSwap.Text = "";
-                    return;
-                }
-                else if (Convert.ToInt32(TbRs3Money.Text) < transfer.SwapRateToOSRS)
-                {
-                    MessageBox.Show("Insufficient Balance");
-                    TbRs3Money.Text = "";
-                    return;
+
+                    if (Convert.ToInt32(TbRs3Money.Text) != Convert.ToInt32(LbRs3Money.Text) && Convert.ToInt32(TbRs3Money.Text) >= Convert.ToInt32(LbRs3Money.Text))
+                    {
+                        MessageBox.Show("Not enough RS3 gold");
+                        updateRs3MoneyText();
+
+
+                    }
+                    else if (Convert.ToInt32(TbRs3Money.Text) < transfer.SwapRateToOSRS)
+                    {
+                        MessageBox.Show("Insufficient Balance");
+                        updateRs3MoneyText();
+
+                    }
+                    else
+                    {
+                        SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
+                        (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(henk.OSRS, henk.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                        updateRs3MoneyText();
+                        MessageBox.Show("Money has been Swapped");
+                    }
+
+
+
                 }
                 else
                 {
-                    MessageBox.Show("Money has been Swapped");
+
+
+                    MessageBox.Show("Something went wrong please try again");
+
                 }
-
-                SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(henk.OSRS, henk.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
-                updateRs3MoneyText();
-
             }
 
 
@@ -136,26 +140,24 @@ namespace moneyswapper
 
         private void TbRs3Money_TextChanged(object sender, EventArgs e)
         {
-            if (TbRs3Money.Text == "Rs3 amount")
+            if (TbRs3Money.Text != "Rs3 amount")
             {
-                return;
-            }
 
-            if (System.Text.RegularExpressions.Regex.IsMatch(TbRs3Money.Text, "[^0-9]"))
-            {
-                TbRs3Money.Text = TbRs3Money.Text.Remove(TbRs3Money.Text.Length - 1);
-            }
 
-            if (TbRs3Money.Text != "")
-            {
-                SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                (henk.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.transfer1(henk.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
-                LbPreviewRs3ToOsrsSwap.Text = transfer.TransferAmount.ToString();
 
-            }
-            else
-            {
-                TbRs3Money.Text = "";
+                if (System.Text.RegularExpressions.Regex.IsMatch(TbRs3Money.Text, "[^0-9]"))
+                {
+                    TbRs3Money.Text = TbRs3Money.Text.Remove(TbRs3Money.Text.Length - 1);
+                }
+
+                if (TbRs3Money.Text != "")
+                {
+                    SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
+                    (henk.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.transfer1(henk.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                    LbPreviewRs3ToOsrsSwap.Text = transfer.TransferAmount.ToString();
+
+                }
+
             }
         }
 
@@ -188,6 +190,8 @@ namespace moneyswapper
             TbRs3Money.Text = "";
             TbRs3Money.ForeColor = Color.Black;
         }
+
+
     }
 
 }

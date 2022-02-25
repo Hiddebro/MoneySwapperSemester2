@@ -50,10 +50,9 @@ namespace moneyswapper
             // 
             // BtnOsrsToRs3
             // 
-            this.BtnOsrsToRs3.Location = new System.Drawing.Point(241, 45);
-            this.BtnOsrsToRs3.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnOsrsToRs3.Location = new System.Drawing.Point(211, 34);
             this.BtnOsrsToRs3.Name = "BtnOsrsToRs3";
-            this.BtnOsrsToRs3.Size = new System.Drawing.Size(138, 31);
+            this.BtnOsrsToRs3.Size = new System.Drawing.Size(121, 23);
             this.BtnOsrsToRs3.TabIndex = 0;
             this.BtnOsrsToRs3.Text = "Swap Osrs to Rs3";
             this.BtnOsrsToRs3.UseVisualStyleBackColor = true;
@@ -62,10 +61,9 @@ namespace moneyswapper
             // TbOsrsMoney
             // 
             this.TbOsrsMoney.ForeColor = System.Drawing.Color.LightGray;
-            this.TbOsrsMoney.Location = new System.Drawing.Point(241, 109);
-            this.TbOsrsMoney.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TbOsrsMoney.Location = new System.Drawing.Point(211, 82);
             this.TbOsrsMoney.Name = "TbOsrsMoney";
-            this.TbOsrsMoney.Size = new System.Drawing.Size(129, 27);
+            this.TbOsrsMoney.Size = new System.Drawing.Size(113, 23);
             this.TbOsrsMoney.TabIndex = 1;
             this.TbOsrsMoney.Text = "Osrs amount";
             this.TbOsrsMoney.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TbOsrsMoney_MouseClick);
@@ -74,27 +72,26 @@ namespace moneyswapper
             // LbOsrsMoney
             // 
             this.LbOsrsMoney.AutoSize = true;
-            this.LbOsrsMoney.Location = new System.Drawing.Point(241, 175);
+            this.LbOsrsMoney.Location = new System.Drawing.Point(211, 131);
             this.LbOsrsMoney.Name = "LbOsrsMoney";
-            this.LbOsrsMoney.Size = new System.Drawing.Size(17, 20);
+            this.LbOsrsMoney.Size = new System.Drawing.Size(13, 15);
             this.LbOsrsMoney.TabIndex = 2;
             this.LbOsrsMoney.Text = "0";
             // 
             // LbRs3Money
             // 
             this.LbRs3Money.AutoSize = true;
-            this.LbRs3Money.Location = new System.Drawing.Point(422, 175);
+            this.LbRs3Money.Location = new System.Drawing.Point(369, 131);
             this.LbRs3Money.Name = "LbRs3Money";
-            this.LbRs3Money.Size = new System.Drawing.Size(17, 20);
+            this.LbRs3Money.Size = new System.Drawing.Size(13, 15);
             this.LbRs3Money.TabIndex = 3;
             this.LbRs3Money.Text = "0";
             // 
             // BtnRs3ToOsrs
             // 
-            this.BtnRs3ToOsrs.Location = new System.Drawing.Point(422, 45);
-            this.BtnRs3ToOsrs.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.BtnRs3ToOsrs.Location = new System.Drawing.Point(369, 34);
             this.BtnRs3ToOsrs.Name = "BtnRs3ToOsrs";
-            this.BtnRs3ToOsrs.Size = new System.Drawing.Size(139, 31);
+            this.BtnRs3ToOsrs.Size = new System.Drawing.Size(122, 23);
             this.BtnRs3ToOsrs.TabIndex = 4;
             this.BtnRs3ToOsrs.Text = "Swap Rs3 to Osrs";
             this.BtnRs3ToOsrs.UseVisualStyleBackColor = true;
@@ -103,10 +100,9 @@ namespace moneyswapper
             // TbRs3Money
             // 
             this.TbRs3Money.ForeColor = System.Drawing.Color.LightGray;
-            this.TbRs3Money.Location = new System.Drawing.Point(422, 109);
-            this.TbRs3Money.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.TbRs3Money.Location = new System.Drawing.Point(369, 82);
             this.TbRs3Money.Name = "TbRs3Money";
-            this.TbRs3Money.Size = new System.Drawing.Size(127, 27);
+            this.TbRs3Money.Size = new System.Drawing.Size(112, 23);
             this.TbRs3Money.TabIndex = 5;
             this.TbRs3Money.Text = "Rs3 amount";
             this.TbRs3Money.MouseClick += new System.Windows.Forms.MouseEventHandler(this.TbRs3Money_MouseClick);
@@ -115,36 +111,36 @@ namespace moneyswapper
             // LbPreviewOsrsToRs3Swap
             // 
             this.LbPreviewOsrsToRs3Swap.AutoSize = true;
-            this.LbPreviewOsrsToRs3Swap.Location = new System.Drawing.Point(77, 116);
+            this.LbPreviewOsrsToRs3Swap.Location = new System.Drawing.Point(67, 87);
             this.LbPreviewOsrsToRs3Swap.Name = "LbPreviewOsrsToRs3Swap";
-            this.LbPreviewOsrsToRs3Swap.Size = new System.Drawing.Size(17, 20);
+            this.LbPreviewOsrsToRs3Swap.Size = new System.Drawing.Size(13, 15);
             this.LbPreviewOsrsToRs3Swap.TabIndex = 6;
             this.LbPreviewOsrsToRs3Swap.Text = "0";
             // 
             // LbPreviewRs3ToOsrsSwap
             // 
             this.LbPreviewRs3ToOsrsSwap.AutoSize = true;
-            this.LbPreviewRs3ToOsrsSwap.Location = new System.Drawing.Point(571, 116);
+            this.LbPreviewRs3ToOsrsSwap.Location = new System.Drawing.Point(500, 87);
             this.LbPreviewRs3ToOsrsSwap.Name = "LbPreviewRs3ToOsrsSwap";
-            this.LbPreviewRs3ToOsrsSwap.Size = new System.Drawing.Size(17, 20);
+            this.LbPreviewRs3ToOsrsSwap.Size = new System.Drawing.Size(13, 15);
             this.LbPreviewRs3ToOsrsSwap.TabIndex = 7;
             this.LbPreviewRs3ToOsrsSwap.Text = "0";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(77, 87);
+            this.label1.Location = new System.Drawing.Point(67, 65);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 20);
+            this.label1.Size = new System.Drawing.Size(100, 15);
             this.label1.TabIndex = 8;
             this.label1.Text = "New RS3 balance:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(571, 87);
+            this.label2.Location = new System.Drawing.Point(500, 65);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(138, 20);
+            this.label2.Size = new System.Drawing.Size(109, 15);
             this.label2.TabIndex = 9;
             this.label2.Text = "New OSRS balance:";
             // 
@@ -152,18 +148,20 @@ namespace moneyswapper
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Location = new System.Drawing.Point(1, -3);
+            this.tabControl1.Location = new System.Drawing.Point(2, 2);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(914, 604);
+            this.tabControl1.Size = new System.Drawing.Size(800, 453);
             this.tabControl1.TabIndex = 10;
             // 
             // tabPage1
             // 
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
+            this.tabPage1.Location = new System.Drawing.Point(4, 24);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(906, 571);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage1.Size = new System.Drawing.Size(792, 425);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -182,10 +180,11 @@ namespace moneyswapper
             this.tabPage2.Controls.Add(this.LbOsrsMoney);
             this.tabPage2.Controls.Add(this.LbPreviewOsrsToRs3Swap);
             this.tabPage2.Controls.Add(this.TbOsrsMoney);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(906, 571);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.tabPage2.Size = new System.Drawing.Size(792, 425);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -193,28 +192,27 @@ namespace moneyswapper
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(422, 155);
+            this.label4.Location = new System.Drawing.Point(369, 116);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(88, 20);
+            this.label4.Size = new System.Drawing.Size(69, 15);
             this.label4.TabIndex = 11;
             this.label4.Text = "Rs3 balance";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(241, 155);
+            this.label3.Location = new System.Drawing.Point(211, 116);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(93, 20);
+            this.label3.Size = new System.Drawing.Size(74, 15);
             this.label3.TabIndex = 10;
             this.label3.Text = "Osrs balance";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(914, 600);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.tabControl1);
-            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
