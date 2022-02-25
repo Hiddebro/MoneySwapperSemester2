@@ -36,8 +36,13 @@ namespace moneyswapper
 
         private void BtnOsrsToRs3_Click(object sender, EventArgs e)
         {
+            if (TbOsrsMoney.Text == "Osrs amount")
+            {
+                MessageBox.Show("No Value given");
+            }
             if ((!String.IsNullOrEmpty(TbOsrsMoney.Text)) && (TbOsrsMoney.Text != "Osrs amount"))
             {
+
                 decimal result;
                 if (decimal.TryParse(TbOsrsMoney.Text, out result))
                 {
@@ -60,6 +65,8 @@ namespace moneyswapper
                     MessageBox.Show("Something went wrong please");
                 }
             }
+
+
         }
 
         private void TbOsrsMoney_TextChanged(object sender, EventArgs e)
@@ -90,8 +97,14 @@ namespace moneyswapper
 
         private void BtnRs3ToOsrs_Click(object sender, EventArgs e)
         {
+            if (TbRs3Money.Text == "Rs3 amount")
+            {
+                MessageBox.Show("No Value given");
+            }
+
             if ((!String.IsNullOrEmpty(TbRs3Money.Text)) && (TbRs3Money.Text != "Rs3 amount"))
             {
+
                 decimal result;
 
 
@@ -129,6 +142,7 @@ namespace moneyswapper
                     MessageBox.Show("Something went wrong please try again");
 
                 }
+
             }
 
 
