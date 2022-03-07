@@ -7,21 +7,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 
+//private static string Server = mssqlstud.fhict.local; Database = dbi439802; User Id = dbi439802; Password = Hidde;
 namespace moneyswapper
 {
+    
     public partial class Form1 : Form
     {
-        public UserBank henk = new UserBank();
+     
+
+        public User henk = new User();
         public TransferHandler transfer = new TransferHandler();
 
         public Form1()
         {
             InitializeComponent();
 
-            henk.OSRS = 100;
-            henk.RS3 = 100000;
+          //  henk.OSRS = 100;
+          //  henk.RS3 = 100000;
+
+            //   henk.Username = "";
+            //   henk.Password = "";
+            //   henk.Email = "";
 
             transfer.SwapRateToOSRS = 10;
             transfer.SwapRateToRS3 = 10;
@@ -34,6 +43,28 @@ namespace moneyswapper
 
         }
 
+      
+            
+           
+
+            //User user = new User();
+            //SqlConnection con = new SqlConnection(conString);
+            //con.Open();
+            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
+            //DataTable dt = new DataTable();
+            //sda.Fill(dt);
+
+
+    
+
+        
+        
+        public string conString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
+        private void BtnConnection_Click(object sender, EventArgs e)
+        {
+           // SqlConnection con = new SqlConnection(conString);
+           // con.Open();
+        }
         private void BtnOsrsToRs3_Click(object sender, EventArgs e)
         {
             if (TbOsrsMoney.Text == "Osrs amount")
@@ -205,7 +236,34 @@ namespace moneyswapper
             TbRs3Money.ForeColor = Color.Black;
         }
 
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+            TbRs3Money.Text = "Rs3 amount";
+            TbRs3Money.ForeColor = Color.LightGray;
+            TbOsrsMoney.Text = "Osrs amount";
+            TbOsrsMoney.ForeColor = Color.LightGray;
+        }
 
+        private void BtnInlog_Click(object sender, EventArgs e)
+        {
+            UserLogin();
+            UserMoney();
+        }
+
+        private void BtnRegister_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void BtnAddUser_Click(object sender, EventArgs e)
+        {
+            henk.Username = TbUsernameRegister.Text;
+            henk.Password = TbPasswordRegister.Text;
+            henk.Email = TbRegisterEmail.Text;
+            tabControl1.SelectedIndex = 0;
+        }
+
+       
     }
 
 }

@@ -8,9 +8,7 @@ namespace moneyswapper
 {
     public class UserBank
     {
-        public int OSRS { get; set; }
-
-        public int RS3 { get; set; }
+       
 
     }
 
