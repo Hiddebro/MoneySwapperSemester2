@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using MoneyswapperDAL;
 
 namespace moneyswapper
 {
@@ -28,6 +29,16 @@ namespace moneyswapper
             Email = email;  
             OSRS = oSRS;    
             RS3 = rs3;                  
+        }
+
+        public User(UserDTO dto)
+        {
+            UserID = dto.UserID;
+            Username = dto.Username;
+            Password = dto.Password;
+            Email = dto.Email;
+            OSRS = dto.OSRS;
+            RS3 = dto.RS3;
         }
 
 

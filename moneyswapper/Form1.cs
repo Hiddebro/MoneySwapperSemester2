@@ -23,6 +23,7 @@ namespace moneyswapper
 
         public User user = new User();
         public TransferHandler transfer = new TransferHandler();
+        
 
         public Form1()
         {
@@ -37,56 +38,68 @@ namespace moneyswapper
         }
 
 
-
-
+       
+        UserContext userContext = new UserContext();
         public void UserLogin2()
         {
-
-            using (SqlConnection con = new SqlConnection(connectionString))
+            
+            if (userContext.Login(TbUsername.Text, TbPassword.Text))
             {
-                try
-                {
-                    con.Open();
-                    SqlCommand comm = new SqlCommand("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
-                    SqlDataAdapter sda = new SqlDataAdapter(comm);
-                    comm.Parameters.AddWithValue("@UserID", user.UserID);
-                    comm.Parameters.AddWithValue("@Username", TbUsernameRegister.Text.Trim());
-                    comm.Parameters.AddWithValue("@Password", TbPasswordRegister.Text.Trim());
-                    comm.Parameters.AddWithValue("@Email", TbRegisterEmail.Text.Trim());
-                    comm.Parameters.AddWithValue("@OSRS", user.OSRS);
-                    comm.Parameters.AddWithValue("@RS3", user.RS3);
-                    comm.ExecuteNonQuery();
-                    DataTable dt = new DataTable();
-                    sda.Fill(dt);
-                    if (dt.Rows.Count != 0 && TbUsername.Text != "" && TbPassword.Text != "" && dt.Rows[0][0].ToString() != "0")
-                    {
-                        foreach (DataRow row in dt.Rows)
-
-                        {
-                            user.UserID = row.Field<int>("UserID");
-                            user.OSRS = row.Field<int>("OSRS");
-                            user.RS3 = row.Field<int>("RS3");
-                            user.Email = row.Field<string>("Email");
-                            user.Username = row.Field<string>("Username");
-                            user.Password = row.Field<string>("Password");
-
-                            LbOsrsMoney.Text = user.OSRS.ToString();
-                            LbRs3Money.Text = user.RS3.ToString();
-
-                        }
-                        tabControl1.SelectedIndex = 1;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Invalid username or password");
-                    }
-                    con.Close();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Can not open connection ! " + ex);
-                }
+                tabControl1.SelectedIndex = 1;
+                var dto = userContext.getUser(TbUsername.Text);
+                LbOsrsMoney.Text = dto.OSRS.ToString();
+                LbRs3Money.Text = dto.RS3.ToString();
             }
+            else
+            {
+                MessageBox.Show("Invalid username or password");
+            }
+
+            //using (SqlConnection con = new SqlConnection(connectionString))
+            //{
+            //    try
+            //    {
+            //        con.Open();
+            //        SqlCommand comm = new SqlCommand("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
+            //        SqlDataAdapter sda = new SqlDataAdapter(comm);
+            //        comm.Parameters.AddWithValue("@UserID", user.UserID);
+            //        comm.Parameters.AddWithValue("@Username", TbUsernameRegister.Text.Trim());
+            //        comm.Parameters.AddWithValue("@Password", TbPasswordRegister.Text.Trim());
+            //        comm.Parameters.AddWithValue("@Email", TbRegisterEmail.Text.Trim());
+            //        comm.Parameters.AddWithValue("@OSRS", user.OSRS);
+            //        comm.Parameters.AddWithValue("@RS3", user.RS3);
+            //        comm.ExecuteNonQuery();
+            //        DataTable dt = new DataTable();
+            //        sda.Fill(dt);
+            //        if (dt.Rows.Count != 0 && TbUsername.Text != "" && TbPassword.Text != "" && dt.Rows[0][0].ToString() != "0")
+            //        {
+            //            foreach (DataRow row in dt.Rows)
+
+            //            {
+            //                user.UserID = row.Field<int>("UserID");
+            //                user.OSRS = row.Field<int>("OSRS");
+            //                user.RS3 = row.Field<int>("RS3");
+            //                user.Email = row.Field<string>("Email");
+            //                user.Username = row.Field<string>("Username");
+            //                user.Password = row.Field<string>("Password");
+
+            //                LbOsrsMoney.Text = user.OSRS.ToString();
+            //                LbRs3Money.Text = user.RS3.ToString();
+
+            //            }
+            //            tabControl1.SelectedIndex = 1;
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Invalid username or password");
+            //        }
+            //        con.Close();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        MessageBox.Show("Can not open connection ! " + ex);
+            //    }
+            //}
 
         }
 
@@ -157,7 +170,7 @@ namespace moneyswapper
                         (user.OSRS, user.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.OsrsToRs3(user.OSRS, user.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
                         updateOsrsMoneyText();
                         MessageBox.Show("Money has been Swapped");
-                        UpdateMoney();
+                        userContext.UpdateMoney(user.UserID, user.OSRS, user.RS3);
                     }
                 }
                 else
@@ -230,7 +243,7 @@ namespace moneyswapper
                         (user.OSRS, user.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(user.OSRS, user.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
                         updateRs3MoneyText();
                         MessageBox.Show("Money has been Swapped");
-                        UpdateMoney();
+                        userContext.UpdateMoney(user.UserID, user.OSRS, user.RS3);
                     }
 
 
@@ -375,33 +388,14 @@ namespace moneyswapper
                 MessageBox.Show("Can not open connection ! " + ex);
             }
         }
+
+
         void clear()
         {
             TbUsernameRegister.Text = TbPasswordRegister.Text = TbRegisterEmail.Text = TbOSRSRegisterMoney.Text = TbRS3RegisterMoney.Text = "";
         }
 
-        public void UpdateMoney()
-        {
-            try
-            {
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    con.Open();
-                    SqlCommand comm = new SqlCommand("UPDATE UserData SET OSRS = @OSRS , RS3 = @RS3 WHERE UserID = @UserID", con);
-                    comm.Parameters.AddWithValue("@UserID", user.UserID);
-                    comm.Parameters.AddWithValue("@OSRS", user.OSRS);
-                    comm.Parameters.AddWithValue("@RS3", user.RS3);
-                    comm.ExecuteNonQuery();
-                    Console.WriteLine("Money!");
-                    con.Close();
-                }
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Can not open connection ! " + ex);
-            }
-        }
+       
 
         private void button1_Click(object sender, EventArgs e)
         {

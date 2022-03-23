@@ -5,15 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using MoneyswapperDAL;
 
+
+
+
 namespace moneyswapper
 {
     public class User_container
     {
         UserContext userContext = new UserContext();
-           
-        public void GetUser()
+        public User GetUser(string username)
         {
-            userContext.getUser();  
+            userContext = new UserContext();
+            UserDTO userDTO = userContext.getUser(username);
+
+            return new User(userDTO);
         }
     }
+
+
 }
