@@ -8,62 +8,130 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
+using MoneyswapperDAL;
 
 
-//private static string Server = mssqlstud.fhict.local; Database = dbi439802; User Id = dbi439802; Password = Hidde;
+
+
 namespace moneyswapper
 {
-    
+
     public partial class Form1 : Form
     {
-     
 
-        public User henk = new User();
+        string connectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
+
+        public User user = new User();
         public TransferHandler transfer = new TransferHandler();
 
         public Form1()
         {
             InitializeComponent();
 
-          //  henk.OSRS = 100;
-          //  henk.RS3 = 100000;
-
-            //   henk.Username = "";
-            //   henk.Password = "";
-            //   henk.Email = "";
-
             transfer.SwapRateToOSRS = 10;
             transfer.SwapRateToRS3 = 10;
-
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
 
             LbPreviewOsrsToRs3Swap.Text = "";
             LbPreviewRs3ToOsrsSwap.Text = "";
 
         }
 
-      
-            
-           
-
-            //User user = new User();
-            //SqlConnection con = new SqlConnection(conString);
-            //con.Open();
-            //SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
-            //DataTable dt = new DataTable();
-            //sda.Fill(dt);
 
 
-    
 
-        
-        
-        public string conString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
+        public void UserLogin2()
+        {
+
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                try
+                {
+                    con.Open();
+                    SqlCommand comm = new SqlCommand("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
+                    SqlDataAdapter sda = new SqlDataAdapter(comm);
+                    comm.Parameters.AddWithValue("@UserID", user.UserID);
+                    comm.Parameters.AddWithValue("@Username", TbUsernameRegister.Text.Trim());
+                    comm.Parameters.AddWithValue("@Password", TbPasswordRegister.Text.Trim());
+                    comm.Parameters.AddWithValue("@Email", TbRegisterEmail.Text.Trim());
+                    comm.Parameters.AddWithValue("@OSRS", user.OSRS);
+                    comm.Parameters.AddWithValue("@RS3", user.RS3);
+                    comm.ExecuteNonQuery();
+                    DataTable dt = new DataTable();
+                    sda.Fill(dt);
+                    if (dt.Rows.Count != 0 && TbUsername.Text != "" && TbPassword.Text != "" && dt.Rows[0][0].ToString() != "0")
+                    {
+                        foreach (DataRow row in dt.Rows)
+
+                        {
+                            user.UserID = row.Field<int>("UserID");
+                            user.OSRS = row.Field<int>("OSRS");
+                            user.RS3 = row.Field<int>("RS3");
+                            user.Email = row.Field<string>("Email");
+                            user.Username = row.Field<string>("Username");
+                            user.Password = row.Field<string>("Password");
+
+                            LbOsrsMoney.Text = user.OSRS.ToString();
+                            LbRs3Money.Text = user.RS3.ToString();
+
+                        }
+                        tabControl1.SelectedIndex = 1;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Invalid username or password");
+                    }
+                    con.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Can not open connection ! " + ex);
+                }
+            }
+
+        }
+
+        //public void UserLogin()
+        //{
+        //    SqlConnection con = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde");
+
+        //    SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM UserData WHERE Username='" + TbUsername.Text + "' AND Password='" + TbPassword.Text + "'", con);
+
+        //    DataTable dt = new DataTable();
+        //    sda.Fill(dt);
+        //    if (dt.Rows.Count != 0 && TbUsername.Text != "" && TbPassword.Text != "" && dt.Rows[0][0].ToString() != "0")
+        //    {
+        //        foreach (DataRow row in dt.Rows)
+
+        //        {   
+        //            user.UserID = row.Field<int>("UserID");
+        //            user.OSRS = row.Field<int>("OSRS");
+        //            user.RS3 = row.Field<int>("RS3");
+        //            LbOsrsMoney.Text = user.OSRS.ToString();
+        //            LbRs3Money.Text = user.RS3.ToString();
+
+        //        }
+        //        tabControl1.SelectedIndex = 1;
+        //    }
+        //    else
+        //    {
+        //        MessageBox.Show("Invalid username or password");
+        //    }
+        //}
+
+        public void connection()
+        {
+            SqlConnection con = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde");
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM UserData", con);
+            con.Open();
+            DataTable dt = new DataTable();
+            MessageBox.Show(dt.Rows[3][3].ToString());
+            //  MessageBox.Show("Connection Open  !");
+        }
+
+
         private void BtnConnection_Click(object sender, EventArgs e)
         {
-           // SqlConnection con = new SqlConnection(conString);
-           // con.Open();
+            // connection();
         }
         private void BtnOsrsToRs3_Click(object sender, EventArgs e)
         {
@@ -86,9 +154,10 @@ namespace moneyswapper
                     else
                     {
                         SwapperOsrsToRs3 swapper = new SwapperOsrsToRs3();
-                        (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.OsrsToRs3(henk.OSRS, henk.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
+                        (user.OSRS, user.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.OsrsToRs3(user.OSRS, user.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
                         updateOsrsMoneyText();
                         MessageBox.Show("Money has been Swapped");
+                        UpdateMoney();
                     }
                 }
                 else
@@ -114,7 +183,7 @@ namespace moneyswapper
                 if (TbOsrsMoney.Text != "")
                 {
                     SwapperOsrsToRs3 swapper = new SwapperOsrsToRs3();
-                    (henk.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.transfer(henk.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
+                    (user.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.transfer(user.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
                     LbPreviewOsrsToRs3Swap.Text = transfer.TransferAmount.ToString();
 
                 }
@@ -158,9 +227,10 @@ namespace moneyswapper
                     else
                     {
                         SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                        (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(henk.OSRS, henk.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                        (user.OSRS, user.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(user.OSRS, user.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
                         updateRs3MoneyText();
                         MessageBox.Show("Money has been Swapped");
+                        UpdateMoney();
                     }
 
 
@@ -198,7 +268,7 @@ namespace moneyswapper
                 if (TbRs3Money.Text != "")
                 {
                     SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                    (henk.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.transfer1(henk.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                    (user.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.transfer1(user.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
                     LbPreviewRs3ToOsrsSwap.Text = transfer.TransferAmount.ToString();
 
                 }
@@ -209,16 +279,16 @@ namespace moneyswapper
 
         public void updateOsrsMoneyText()
         {
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
+            LbOsrsMoney.Text = user.OSRS.ToString();
+            LbRs3Money.Text = user.RS3.ToString();
             TbOsrsMoney.Text = "Osrs amount";
             TbOsrsMoney.ForeColor = Color.LightGray;
             LbPreviewOsrsToRs3Swap.Text = "";
         }
         public void updateRs3MoneyText()
         {
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
+            LbOsrsMoney.Text = user.OSRS.ToString();
+            LbRs3Money.Text = user.RS3.ToString();
             TbRs3Money.Text = "Rs3 amount";
             TbRs3Money.ForeColor = Color.LightGray;
             LbPreviewRs3ToOsrsSwap.Text = "";
@@ -246,8 +316,8 @@ namespace moneyswapper
 
         private void BtnInlog_Click(object sender, EventArgs e)
         {
-            UserLogin();
-            UserMoney();
+            UserLogin2();
+
         }
 
         private void BtnRegister_Click(object sender, EventArgs e)
@@ -257,15 +327,92 @@ namespace moneyswapper
 
         private void BtnAddUser_Click(object sender, EventArgs e)
         {
-            henk.Username = TbUsernameRegister.Text;
-            henk.Password = TbPasswordRegister.Text;
-            henk.Email = TbRegisterEmail.Text;
+            AddUser();
             tabControl1.SelectedIndex = 0;
         }
 
-       
-    }
+        int osrsRegister = 0;
+        int rs3Register = 0;
+        public void AddUser()
+        {
+            try
+            {
+                if (TbUsernameRegister.Text == "" || TbPasswordRegister.Text == "" || TbRegisterEmail.Text == "" || TbOSRSRegisterMoney.Text == "" || TbRS3RegisterMoney.Text == "")
+                {
+                    MessageBox.Show("please fill all fields");
+                }
+                else
+                {
 
+                    {
+                        rs3Register = Convert.ToInt32(TbRS3RegisterMoney.Text);
+                        osrsRegister = Convert.ToInt32(TbOSRSRegisterMoney.Text);
+                        using (SqlConnection con = new SqlConnection(connectionString))
+                        {
+                            con.Open();
+                            SqlCommand comm = new SqlCommand("UserAdd", con);
+                            comm.CommandType = CommandType.StoredProcedure;
+                            comm.Parameters.AddWithValue("@Username", TbUsernameRegister.Text.Trim());
+                            comm.Parameters.AddWithValue("@Password", TbPasswordRegister.Text.Trim());
+                            comm.Parameters.AddWithValue("@Email", TbRegisterEmail.Text.Trim());
+                            comm.Parameters.AddWithValue("@OSRS", osrsRegister);
+                            comm.Parameters.AddWithValue("@RS3", rs3Register);
+                            comm.ExecuteNonQuery();
+                            clear();
+                            MessageBox.Show("Registration is succesfull");
+                            con.Close();
+                        }
+                    }
+                }
+
+
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Can not open connection ! " + ex);
+            }
+        }
+        void clear()
+        {
+            TbUsernameRegister.Text = TbPasswordRegister.Text = TbRegisterEmail.Text = TbOSRSRegisterMoney.Text = TbRS3RegisterMoney.Text = "";
+        }
+
+        public void UpdateMoney()
+        {
+            try
+            {
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    SqlCommand comm = new SqlCommand("UPDATE UserData SET OSRS = @OSRS , RS3 = @RS3 WHERE UserID = @UserID", con);
+                    comm.Parameters.AddWithValue("@UserID", user.UserID);
+                    comm.Parameters.AddWithValue("@OSRS", user.OSRS);
+                    comm.Parameters.AddWithValue("@RS3", user.RS3);
+                    comm.ExecuteNonQuery();
+                    Console.WriteLine("Money!");
+                    con.Close();
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Can not open connection ! " + ex);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(user.OSRS.ToString() + " veel OSRS geldje");
+        }
+
+        private void BtnShowRS3Money_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(user.RS3.ToString() + " veel RS3 geldje");
+        }
+    }
 }
 
 

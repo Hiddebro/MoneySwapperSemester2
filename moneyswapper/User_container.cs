@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace moneyswapper
 {
-    public class UserBank
+    public class User_container
     {
-       
 
     }
-
 }

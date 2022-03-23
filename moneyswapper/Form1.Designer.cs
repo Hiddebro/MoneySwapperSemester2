@@ -59,6 +59,10 @@ namespace moneyswapper
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.TbOSRSRegisterMoney = new System.Windows.Forms.TextBox();
+            this.TbRS3RegisterMoney = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -66,6 +70,9 @@ namespace moneyswapper
             this.BtnAddUser = new System.Windows.Forms.Button();
             this.TbPasswordRegister = new System.Windows.Forms.TextBox();
             this.TbUsernameRegister = new System.Windows.Forms.TextBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.BtnShowRS3Money = new System.Windows.Forms.Button();
+            this.BtnShowOSRSMoney = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
@@ -74,6 +81,7 @@ namespace moneyswapper
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnOsrsToRs3
@@ -174,9 +182,12 @@ namespace moneyswapper
             // 
             // tabControl1
             // 
+            this.tabControl1.AccessibleRole = System.Windows.Forms.AccessibleRole.None;
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage3);
+            this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.tabControl1.Location = new System.Drawing.Point(2, 2);
             this.tabControl1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.tabControl1.Name = "tabControl1";
@@ -281,19 +292,21 @@ namespace moneyswapper
             // 
             this.TbPassword.Location = new System.Drawing.Point(326, 274);
             this.TbPassword.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TbPassword.MaxLength = 20;
             this.TbPassword.Name = "TbPassword";
+            this.TbPassword.PlaceholderText = "&&&";
             this.TbPassword.Size = new System.Drawing.Size(110, 23);
             this.TbPassword.TabIndex = 7;
-            this.TbPassword.Text = "Hidde";
             // 
             // TbUsername
             // 
             this.TbUsername.Location = new System.Drawing.Point(326, 206);
             this.TbUsername.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.TbUsername.MaxLength = 20;
             this.TbUsername.Name = "TbUsername";
+            this.TbUsername.PlaceholderText = "&&&";
             this.TbUsername.Size = new System.Drawing.Size(110, 23);
             this.TbUsername.TabIndex = 6;
-            this.TbUsername.Text = "Hidde";
             // 
             // pictureBox4
             // 
@@ -394,6 +407,10 @@ namespace moneyswapper
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.label10);
+            this.tabPage3.Controls.Add(this.label9);
+            this.tabPage3.Controls.Add(this.TbOSRSRegisterMoney);
+            this.tabPage3.Controls.Add(this.TbRS3RegisterMoney);
             this.tabPage3.Controls.Add(this.label8);
             this.tabPage3.Controls.Add(this.label7);
             this.tabPage3.Controls.Add(this.label6);
@@ -410,6 +427,38 @@ namespace moneyswapper
             this.tabPage3.Text = "tabPage3";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(258, 237);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(71, 15);
+            this.label10.TabIndex = 10;
+            this.label10.Text = "RS3 MONEY";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(258, 285);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(80, 15);
+            this.label9.TabIndex = 9;
+            this.label9.Text = "OSRS MONEY";
+            // 
+            // TbOSRSRegisterMoney
+            // 
+            this.TbOSRSRegisterMoney.Location = new System.Drawing.Point(258, 303);
+            this.TbOSRSRegisterMoney.Name = "TbOSRSRegisterMoney";
+            this.TbOSRSRegisterMoney.Size = new System.Drawing.Size(110, 23);
+            this.TbOSRSRegisterMoney.TabIndex = 8;
+            // 
+            // TbRS3RegisterMoney
+            // 
+            this.TbRS3RegisterMoney.Location = new System.Drawing.Point(258, 253);
+            this.TbRS3RegisterMoney.Name = "TbRS3RegisterMoney";
+            this.TbRS3RegisterMoney.Size = new System.Drawing.Size(110, 23);
+            this.TbRS3RegisterMoney.TabIndex = 7;
+            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -422,7 +471,7 @@ namespace moneyswapper
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(257, 147);
+            this.label7.Location = new System.Drawing.Point(258, 147);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(68, 15);
             this.label7.TabIndex = 5;
@@ -450,10 +499,10 @@ namespace moneyswapper
             this.BtnAddUser.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(117)))), ((int)(((byte)(224)))));
             this.BtnAddUser.Font = new System.Drawing.Font("Bauhaus 93", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnAddUser.ForeColor = System.Drawing.Color.White;
-            this.BtnAddUser.Location = new System.Drawing.Point(258, 248);
+            this.BtnAddUser.Location = new System.Drawing.Point(248, 331);
             this.BtnAddUser.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.BtnAddUser.Name = "BtnAddUser";
-            this.BtnAddUser.Size = new System.Drawing.Size(167, 47);
+            this.BtnAddUser.Size = new System.Drawing.Size(167, 50);
             this.BtnAddUser.TabIndex = 2;
             this.BtnAddUser.Text = "Register";
             this.BtnAddUser.UseVisualStyleBackColor = false;
@@ -475,6 +524,38 @@ namespace moneyswapper
             this.TbUsernameRegister.Size = new System.Drawing.Size(110, 23);
             this.TbUsernameRegister.TabIndex = 0;
             // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.BtnShowRS3Money);
+            this.tabPage4.Controls.Add(this.BtnShowOSRSMoney);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(792, 425);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "tabPage4";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // BtnShowRS3Money
+            // 
+            this.BtnShowRS3Money.Location = new System.Drawing.Point(263, 132);
+            this.BtnShowRS3Money.Name = "BtnShowRS3Money";
+            this.BtnShowRS3Money.Size = new System.Drawing.Size(110, 23);
+            this.BtnShowRS3Money.TabIndex = 1;
+            this.BtnShowRS3Money.Text = "Show RS3 Cash";
+            this.BtnShowRS3Money.UseVisualStyleBackColor = true;
+            this.BtnShowRS3Money.Click += new System.EventHandler(this.BtnShowRS3Money_Click);
+            // 
+            // BtnShowOSRSMoney
+            // 
+            this.BtnShowOSRSMoney.Location = new System.Drawing.Point(263, 89);
+            this.BtnShowOSRSMoney.Name = "BtnShowOSRSMoney";
+            this.BtnShowOSRSMoney.Size = new System.Drawing.Size(110, 23);
+            this.BtnShowOSRSMoney.TabIndex = 0;
+            this.BtnShowOSRSMoney.Text = "Show OSRS Cash";
+            this.BtnShowOSRSMoney.UseVisualStyleBackColor = true;
+            this.BtnShowOSRSMoney.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -494,6 +575,7 @@ namespace moneyswapper
             this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -520,22 +602,29 @@ namespace moneyswapper
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TextBox TbPassword;
-        private System.Windows.Forms.TextBox TbUsername;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Button BtnInlog;
         private System.Windows.Forms.Button BtnRegister;
-        private System.Windows.Forms.TextBox TbRegisterEmail;
         private System.Windows.Forms.Button BtnAddUser;
-        private System.Windows.Forms.TextBox TbPasswordRegister;
-        private System.Windows.Forms.TextBox TbUsernameRegister;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Button BtnConnection;
+        public System.Windows.Forms.TextBox TbPassword;
+        public System.Windows.Forms.TextBox TbUsername;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.TextBox TbRegisterEmail;
+        public System.Windows.Forms.TextBox TbPasswordRegister;
+        public System.Windows.Forms.TextBox TbUsernameRegister;
+        public System.Windows.Forms.TextBox TbOSRSRegisterMoney;
+        public System.Windows.Forms.TextBox TbRS3RegisterMoney;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.Button BtnShowOSRSMoney;
+        private System.Windows.Forms.Button BtnShowRS3Money;
     }
 }
 

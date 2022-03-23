@@ -9,8 +9,8 @@ namespace moneyswapper
 {
     public class User
     {
-        public int User_id { get; set; }
-        public string Username { get; set; }
+       public int UserID { get;  set; }   
+        public string Username { get;  set; }
 
         public string Password { get; set; }
 
@@ -20,10 +20,26 @@ namespace moneyswapper
 
         public int RS3 { get; set; }
 
-
-        public void UserLogin()
+        public User(int userId , string username , string password , string email , int oSRS , int rs3)
         {
-
+            UserID = userId;   
+            Username = username;
+            Password = password;    
+            Email = email;  
+            OSRS = oSRS;    
+            RS3 = rs3;                  
         }
+
+
+        public User()
+        {
+         
+        }
+
+        
+
+
+
+
     }
 }
