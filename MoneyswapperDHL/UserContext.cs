@@ -97,7 +97,6 @@ namespace MoneyswapperDAL
 
                 return (userid, osrs, rs3);
 
-               
                 }
  
             }
