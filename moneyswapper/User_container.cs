@@ -12,14 +12,28 @@ namespace moneyswapper
 {
     public class User_container
     {
-        UserContext userContext = new UserContext();
+        private UserContext userContext = new UserContext();
         public User GetUser(string username)
         {
-            userContext = new UserContext();
             UserDTO userDTO = userContext.getUser(username);
 
             return new User(userDTO);
         }
+
+        public void Update(User user)
+        {
+            userContext.UpdateMoney(user.ToDTO());
+        }
+
+        public User adduser(string username, string password, string email, int rs3, int osrs)
+        {
+            UserDTO dto = userContext.addUser(username, password, email, rs3, osrs);
+
+            return new User(dto);
+        }
+
+
+
     }
 
 

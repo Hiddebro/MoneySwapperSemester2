@@ -10,7 +10,11 @@ namespace moneyswapper
 {
     public class User
     {
-       public int UserID { get;  set; }   
+
+        private Swapper swapper = new Swapper();
+
+
+        public int UserID { get;  set; }   
         public string Username { get;  set; }
 
         public string Password { get; set; }
@@ -31,6 +35,8 @@ namespace moneyswapper
             RS3 = rs3;                  
         }
 
+        
+
         public User(UserDTO dto)
         {
             UserID = dto.UserID;
@@ -40,14 +46,50 @@ namespace moneyswapper
             OSRS = dto.OSRS;
             RS3 = dto.RS3;
         }
-
+      
 
         public User()
         {
          
         }
 
-        
+        public UserDTO ToDTO()
+        {
+            return new UserDTO
+            {
+                UserID = UserID,
+                Username = Username,
+                Password = Password,
+                Email = Email,
+                OSRS = OSRS,
+                RS3 = RS3
+            };
+        }
+
+
+        public bool SwapRs3ToOsrs(int amount)
+        {
+            if (amount <= RS3)
+            {
+                (OSRS, RS3) = swapper.Rs3ToOsrs(OSRS, RS3, amount);
+                return true;
+            }
+
+            return false;
+
+
+        }
+
+        public bool SwapOsrsToRs3(int amount)
+        {
+            if (amount <= RS3)
+            {
+                (OSRS, RS3) = swapper.OsrsToRs3(OSRS, RS3, amount);
+                return true;
+            }
+
+            return false;
+        }
 
 
 

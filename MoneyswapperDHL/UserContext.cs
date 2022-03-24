@@ -16,8 +16,8 @@ namespace MoneyswapperDAL
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                //try
-                //{
+                try
+                {
 
                     con.Open();
                     SqlCommand comm = new SqlCommand("SELECT * FROM UserData WHERE Username = @username", con);
@@ -42,11 +42,12 @@ namespace MoneyswapperDAL
 
                 }
 
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //}
-           // }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
         }
 
         public bool Login(string username, string password)
@@ -54,8 +55,8 @@ namespace MoneyswapperDAL
 
             using (SqlConnection con = new SqlConnection(connectionString))
             {
-                //try
-                //{
+                try
+                {
                     con.Open();
                     SqlCommand comm = new SqlCommand("SELECT * FROM UserData WHERE Username = @username AND Password = @password", con);
                     SqlDataAdapter sda = new SqlDataAdapter(comm);
@@ -72,39 +73,78 @@ namespace MoneyswapperDAL
 
                     return dt.Rows.Count != 0;
                 }
-                //catch (Exception ex)
-                //{
-                //   Console.WriteLine(ex.Message);
-                //}
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    return false;
+                }
 
-          //  }
+            }
 
         }
-        public (int ,int, int) UpdateMoney(int userid, int osrs, int rs3)
+        public void UpdateMoney(UserDTO user)
         {
-            //try
-           // {
+            try
+            {
                 using (SqlConnection con = new SqlConnection(connectionString))
                 {
                     con.Open();
                     SqlCommand comm = new SqlCommand("UPDATE UserData SET OSRS = @OSRS , RS3 = @RS3 WHERE UserID = @UserID", con);
-                    comm.Parameters.AddWithValue("@UserID",  userid);
-                    comm.Parameters.AddWithValue("@OSRS", osrs);
-                    comm.Parameters.AddWithValue("@RS3", rs3);
+                    comm.Parameters.AddWithValue("@UserID", user.UserID);
+                    comm.Parameters.AddWithValue("@OSRS", user.OSRS);
+                    comm.Parameters.AddWithValue("@RS3", user.RS3);
                     comm.ExecuteNonQuery();
                     Console.WriteLine("Money!");
                     con.Close();
-
-                return (userid, osrs, rs3);
-
                 }
- 
+
             }
-          //  catch (Exception ex)
-          //  {
-            //    MessageBox.Show("Can not open connection ! " + ex);
-          //  }
-      //  }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+
+            }
+        }
+
+
+        public UserDTO addUser(string username, string password, string email, int rs3, int osrs)
+        {
+            try
+            {
+
+
+                using (SqlConnection con = new SqlConnection(connectionString))
+                {
+                    con.Open();
+                    SqlCommand comm = new SqlCommand("UserAdd", con);
+                    comm.CommandType = CommandType.StoredProcedure;
+                    comm.Parameters.AddWithValue("@Username", username);
+                    comm.Parameters.AddWithValue("@Password", password);
+                    comm.Parameters.AddWithValue("@Email", email);
+                    comm.Parameters.AddWithValue("@OSRS", osrs);
+                    comm.Parameters.AddWithValue("@RS3", rs3);
+                    comm.ExecuteNonQuery();
+
+
+                    con.Close();
+                }
+
+                return getUser(username);
+
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+        }
+
+
     }
 }
+
+
+
+
 
