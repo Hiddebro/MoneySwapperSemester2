@@ -10,7 +10,7 @@ namespace MoneyswapperDAL
 {
     public class UserContext
     {
-        string connectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
+        static string connectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
 
         public UserDTO getUser(string username)
         {
