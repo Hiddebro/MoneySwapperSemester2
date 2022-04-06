@@ -223,13 +223,15 @@ namespace moneyswapper
 
         private void BtnAddUser_Click(object sender, EventArgs e)
         {
-            if (TbOSRSRegisterMoney.Text != "[^0-9]" && TbRS3RegisterMoney.Text != "[^0-9]")
+           
+           
+            if (System.Text.RegularExpressions.Regex.IsMatch(TbOSRSRegisterMoney.Text, "[^0-9]") && System.Text.RegularExpressions.Regex.IsMatch(TbRS3RegisterMoney.Text, "[^0-9]"))
             {
 
                 clear();
                 MessageBox.Show("wrong input");
             }
-            else
+            else if (TbRegisterEmail.Text != "" && TbPasswordRegister.Text != "" && TbPasswordRegister.Text != "" && TbRS3RegisterMoney.Text != "" && TbOSRSRegisterMoney.Text != "")
             {
                 container.adduser(
                 TbUsernameRegister.Text,
@@ -243,7 +245,15 @@ namespace moneyswapper
                 clear();
 
             }
-        }
+            else
+            {
+                MessageBox.Show("not all fields are correct");
+            }
+            
+             
+         }
+            
+           
         void clear()
         {
             TbUsernameRegister.Text = TbPasswordRegister.Text = TbRegisterEmail.Text = TbOSRSRegisterMoney.Text = TbRS3RegisterMoney.Text = "";
