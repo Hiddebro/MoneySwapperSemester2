@@ -8,7 +8,7 @@ using System.Data;
 
 namespace MoneyswapperDAL
 {
-    internal class ProductContext
+    public class ProductContext
     {
     }
 }
