@@ -5,10 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
+using MoneyswapperDAL.DTOs;
+using MoneyswapperDAL.Interfaces;
 
-namespace MoneyswapperDAL
+namespace MoneyswapperDAL.Context
 {
-    public class UserContext
+    public class UserContext: IUserContext
     {
         static string connectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde";
 

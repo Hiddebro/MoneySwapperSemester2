@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.SqlClient;
 using MoneyswapperDAL;
-
+using MoneyswapperDAL.Context;
 
 namespace moneyswapper
 {
@@ -36,6 +36,7 @@ namespace moneyswapper
 
 
         UserContext userContext = new UserContext();
+        ProductContext productContext = new ProductContext();
         public void UserLogin2()
         {
 
@@ -271,6 +272,16 @@ namespace moneyswapper
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+
+        }
+
+        private void BtnAddProduct_Click(object sender, EventArgs e)
+        {
+           Product_Container product = new Product_Container(new ProductContext());
+            product.addProduct(Convert.ToInt32(TbPrice.Text), Convert.ToInt32(TbQuantity.Text), TbName.Text);
+            
+
+
 
         }
     }

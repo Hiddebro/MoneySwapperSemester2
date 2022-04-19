@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace MoneyswapperDAL
+namespace MoneyswapperDAL.DTOs
 {
     public class UserDTO
     {

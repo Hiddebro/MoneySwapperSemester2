@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MoneyswapperDAL;
-
-
+using MoneyswapperDAL.Context;
+using MoneyswapperDAL.DTOs;
 
 namespace moneyswapper
 {
