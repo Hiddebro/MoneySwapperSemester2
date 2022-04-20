@@ -19,7 +19,7 @@ namespace moneyswapper
 
         public User user = new User();
         public TransferHandler transfer = new TransferHandler();
-        public User_container container = new User_container();
+        public User_container container = new User_container(new UserContext());
 
 
         public Form1()
