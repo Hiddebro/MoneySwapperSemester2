@@ -42,6 +42,23 @@ namespace MoneyswapperDAL.Context
                 Console.WriteLine(ex.Message);
                 
             }
+
+            
         }
+    //    public void getProduct()
+        //    {
+         //   try
+         //   {
+         //       using (SqlConnection con = new SqlConnection(connectionString))
+         //       {
+         //           con.Open();
+          //      }
+
+          //  }
+          //  catch (Exception ex)
+          //  {
+           //     Console.WriteLine(ex.Message);
+           // }
+           // }
     }
 }
