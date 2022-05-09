@@ -9,6 +9,7 @@ namespace MoneyswapperDAL.Interfaces
 {
     public interface IProductContext
     {
-        public void addProduct(int Price, int Quantitiy, string Name);
+        public ProductDTO addProduct(int Price, int Quantity, string Name);
+        public ProductDTO getProduct(string Product_ID);
     }
 }

@@ -1,0 +1,25 @@
+﻿@model MoneySwapperrASP.Models.TransferHandlerModel
+@using MoneySwapperrASP.Models
+@using MoneySwapperrASP.Controllers
+@*
+    
+*@
+@{
+    ViewData["Title"] = "Home Page";
+}
+<html>
+    <head>
+
+    </head>
+    <body>
+        <form asp-controller="Swapper" asp-action="OsrsToRs3" method="post">
+        <div>
+            <input asp-for="SwapRateToOSRS" /> <br />
+            <input type="submit"/> <br /> 
+            OsrsToRS3
+
+        </div>
+        </form>
+        <input type="text" value="" /> <br />  <input type="submit" value="Rs3ToOsrs" /> <br />  <input type="submit" value="Submit" /> <br />
+    </body> 
+</html>

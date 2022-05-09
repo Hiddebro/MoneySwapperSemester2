@@ -18,25 +18,25 @@ namespace moneyswapper
     {
 
         public User user = new User();
-        public TransferHandler transfer = new TransferHandler();
         public User_container container = new User_container(new UserContext());
 
 
         public Form1()
         {
             InitializeComponent();
+            var context = new TransferHandlerContext();
+            transfer = new TransferHandler_Container(context).GetSwaprate();
 
-            transfer.SwapRateToOSRS = 10;
-            transfer.SwapRateToRS3 = 10;
 
-            LbPreviewOsrsToRs3Swap.Text = "";
-            LbPreviewRs3ToOsrsSwap.Text = "";
+
 
         }
 
 
         UserContext userContext = new UserContext();
         ProductContext productContext = new ProductContext();
+        private TransferHandler transfer;
+
         public void UserLogin2()
         {
 
@@ -109,7 +109,7 @@ namespace moneyswapper
                 if (TbOsrsMoney.Text != "")
                 {
                     Swapper swapper = new Swapper();
-                    (user.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.Transfer(user.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
+                    (user.RS3, transfer.TransferAmount) = swapper.Transfer(user.RS3, Convert.ToInt32(TbOsrsMoney.Text));
                     LbPreviewOsrsToRs3Swap.Text = transfer.TransferAmount.ToString();
 
 
@@ -165,7 +165,7 @@ namespace moneyswapper
                 if (TbRs3Money.Text != "")
                 {
                     Swapper swapper = new Swapper();
-                    (user.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Transfer1(user.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                    (user.OSRS, transfer.TransferAmount) = swapper.Transfer1(user.OSRS, Convert.ToInt32(TbRs3Money.Text));
                     LbPreviewRs3ToOsrsSwap.Text = transfer.TransferAmount.ToString();
 
                 }

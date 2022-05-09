@@ -5,7 +5,17 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "moneyswapper", "moneyswapper\moneyswapper.csproj", "{D281AEA2-6FBB-429E-B337-34A269FFA35F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoneyswapperDAL", "MoneyswapperDHL\MoneyswapperDAL.csproj", "{2C243543-38F1-4A37-8F1A-F941491F5AEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBaseLayer", "MoneyswapperDHL\DataBaseLayer.csproj", "{2C243543-38F1-4A37-8F1A-F941491F5AEF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoneySwapperrASP", "MoneySwapperrASP\MoneySwapperrASP.csproj", "{750BDB60-49F2-4774-A46D-DE7484FCF0CB}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1B066638-8FF1-45D9-AC69-41A2981E346C} = {1B066638-8FF1-45D9-AC69-41A2981E346C}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLayer\BusinessLayer.csproj", "{1B066638-8FF1-45D9-AC69-41A2981E346C}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2C243543-38F1-4A37-8F1A-F941491F5AEF} = {2C243543-38F1-4A37-8F1A-F941491F5AEF}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +31,14 @@ Global
 		{2C243543-38F1-4A37-8F1A-F941491F5AEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2C243543-38F1-4A37-8F1A-F941491F5AEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2C243543-38F1-4A37-8F1A-F941491F5AEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750BDB60-49F2-4774-A46D-DE7484FCF0CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750BDB60-49F2-4774-A46D-DE7484FCF0CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750BDB60-49F2-4774-A46D-DE7484FCF0CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750BDB60-49F2-4774-A46D-DE7484FCF0CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B066638-8FF1-45D9-AC69-41A2981E346C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B066638-8FF1-45D9-AC69-41A2981E346C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B066638-8FF1-45D9-AC69-41A2981E346C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B066638-8FF1-45D9-AC69-41A2981E346C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

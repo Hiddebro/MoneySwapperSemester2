@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MoneyswapperDAL.Context;
+using MoneyswapperDAL.DTOs;
+using MoneyswapperDAL.Interfaces;
 
 
 
@@ -11,18 +14,16 @@ namespace moneyswapper
     class Swapper
     {
 
-        private TransferHandler transfer = new TransferHandler
-        {
-            SwapRateToOSRS = 10,
-            SwapRateToRS3 = 10
-        };
-
-
-
+        
         public Swapper()
         {
-
+            var context = new TransferHandlerContext();
+            transfer = new TransferHandler_Container(context).GetSwaprate();
+            
         }
+
+        public TransferHandler transfer { get; private set; }
+        
 
         public (int OSRS, int RS3) OsrsToRs3(int OSRS, int RS3, int TransferAmount)
         {
@@ -48,16 +49,16 @@ namespace moneyswapper
             return (OSRS, RS3);
         }
 
-        public (int RS3, int TransferAmount, int SwapRateToRS3) Transfer(int RS3, int TransferAmount, int SwapRateToRS3)
+        public (int RS3, int TransferAmount) Transfer(int RS3, int TransferAmount)
         {
-            TransferAmount = TransferAmount * SwapRateToRS3 + RS3;
-            return (RS3, TransferAmount, SwapRateToRS3);
+            TransferAmount = TransferAmount * transfer.SwapRateToRS3 + RS3;
+            return (RS3, TransferAmount);
         }
 
-        public (int OSRS, int TransferAmount, int SwapRateToOSRS) Transfer1(int OSRS, int TransferAmount, int SwapRateToOSRS)
+        public (int OSRS, int TransferAmount) Transfer1(int OSRS, int TransferAmount)
         {
-            TransferAmount = OSRS + TransferAmount / SwapRateToOSRS;
-            return (OSRS, TransferAmount, SwapRateToOSRS);
+            TransferAmount = OSRS + TransferAmount / transfer.SwapRateToOSRS;
+            return (OSRS, TransferAmount);
         }
     }
 }
