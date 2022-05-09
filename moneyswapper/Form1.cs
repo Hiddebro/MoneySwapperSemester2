@@ -7,60 +7,93 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Data.SqlClient;
+using MoneyswapperDAL;
+using MoneyswapperDAL.Context;
 
 namespace moneyswapper
 {
+
     public partial class Form1 : Form
     {
-        public UserBank henk = new UserBank();
+
+        public User user = new User();
         public TransferHandler transfer = new TransferHandler();
+        public User_container container = new User_container(new UserContext());
+
 
         public Form1()
         {
             InitializeComponent();
 
-            henk.OSRS = 100;
-            henk.RS3 = 100000;
-
             transfer.SwapRateToOSRS = 10;
             transfer.SwapRateToRS3 = 10;
-
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
 
             LbPreviewOsrsToRs3Swap.Text = "";
             LbPreviewRs3ToOsrsSwap.Text = "";
 
         }
 
+
+        UserContext userContext = new UserContext();
+        ProductContext productContext = new ProductContext();
+        public void UserLogin2()
+        {
+
+            if (userContext.Login(TbUsername.Text, TbPassword.Text))
+            {
+                tabControl1.SelectedIndex = 1;
+                var dto = userContext.getUser(TbUsername.Text);
+                LbOsrsMoney.Text = dto.OSRS.ToString();
+                LbRs3Money.Text = dto.RS3.ToString();
+                user = new User(dto);
+            }
+            else
+            {
+                MessageBox.Show("Invalid username or password");
+            }
+
+        }
+        public void connection()
+        {
+            SqlConnection con = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi439802_runescape;User ID=dbi439802_runescape;Password=Hidde");
+            SqlDataAdapter sda = new SqlDataAdapter("SELECT * FROM UserData", con);
+            con.Open();
+            DataTable dt = new DataTable();
+            MessageBox.Show(dt.Rows[3][3].ToString());
+
+        }
+
+
+        private void BtnConnection_Click(object sender, EventArgs e)
+        {
+            // connection();
+        }
         private void BtnOsrsToRs3_Click(object sender, EventArgs e)
         {
+            if (TbOsrsMoney.Text == "Osrs amount")
+            {
+                MessageBox.Show("No Value given");
+            }
+
             if ((!String.IsNullOrEmpty(TbOsrsMoney.Text)) && (TbOsrsMoney.Text != "Osrs amount"))
             {
-                decimal result;
-                if (decimal.TryParse(TbOsrsMoney.Text, out result))
+                if (user.SwapOsrsToRs3(Convert.ToInt32(TbOsrsMoney.Text)))
                 {
-                    if (Convert.ToInt32(TbOsrsMoney.Text) != Convert.ToInt32(LbOsrsMoney.Text) && Convert.ToInt32(TbOsrsMoney.Text) >= Convert.ToInt32(LbOsrsMoney.Text))
-                    {
-                        MessageBox.Show("Not enough OSRS gold");
-                        updateOsrsMoneyText();
-
-                    }
-                    else
-                    {
-                        SwapperOsrsToRs3 swapper = new SwapperOsrsToRs3();
-                        (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.OsrsToRs3(henk.OSRS, henk.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
-                        updateOsrsMoneyText();
-                        MessageBox.Show("Money has been Swapped");
-                    }
+                    container.Update(user);
+                    MessageBox.Show("Money has been Swapped");
+                    updateOsrsMoneyText();
                 }
                 else
                 {
-                    MessageBox.Show("Something went wrong please");
+                    MessageBox.Show("Not enough OSRS gold");
+                    updateOsrsMoneyText();
                 }
+
             }
+
         }
+
 
         private void TbOsrsMoney_TextChanged(object sender, EventArgs e)
         {
@@ -75,66 +108,45 @@ namespace moneyswapper
 
                 if (TbOsrsMoney.Text != "")
                 {
-                    SwapperOsrsToRs3 swapper = new SwapperOsrsToRs3();
-                    (henk.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.transfer(henk.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
+                    Swapper swapper = new Swapper();
+                    (user.RS3, transfer.TransferAmount, transfer.SwapRateToRS3) = swapper.Transfer(user.RS3, Convert.ToInt32(TbOsrsMoney.Text), transfer.SwapRateToRS3);
                     LbPreviewOsrsToRs3Swap.Text = transfer.TransferAmount.ToString();
+
 
                 }
 
             }
         }
 
-
-
-
-
         private void BtnRs3ToOsrs_Click(object sender, EventArgs e)
         {
+            if (TbRs3Money.Text == "Rs3 amount")
+            {
+                MessageBox.Show("No Value given");
+            }
+
             if ((!String.IsNullOrEmpty(TbRs3Money.Text)) && (TbRs3Money.Text != "Rs3 amount"))
             {
-                decimal result;
 
-
-                if (decimal.TryParse(TbRs3Money.Text, out result))
+                if (user.SwapRs3ToOsrs(Convert.ToInt32(TbRs3Money.Text)))
                 {
-
-                    if (Convert.ToInt32(TbRs3Money.Text) != Convert.ToInt32(LbRs3Money.Text) && Convert.ToInt32(TbRs3Money.Text) >= Convert.ToInt32(LbRs3Money.Text))
-                    {
-                        MessageBox.Show("Not enough RS3 gold");
-                        updateRs3MoneyText();
-
-
-                    }
-                    else if (Convert.ToInt32(TbRs3Money.Text) < transfer.SwapRateToOSRS)
-                    {
-                        MessageBox.Show("Insufficient Balance");
-                        updateRs3MoneyText();
-
-                    }
-                    else
-                    {
-                        SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                        (henk.OSRS, henk.RS3, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Rs3ToOsrs(henk.OSRS, henk.RS3, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
-                        updateRs3MoneyText();
-                        MessageBox.Show("Money has been Swapped");
-                    }
-
-
+                    container.Update(user);
+                    MessageBox.Show("Money has been Swapped");
+                    updateRs3MoneyText();
+                }
+                else if (Convert.ToInt32(TbRs3Money.Text) < transfer.SwapRateToOSRS)
+                {
+                    MessageBox.Show("Insufficient Balance");
+                    updateRs3MoneyText();
 
                 }
                 else
                 {
-
-
-                    MessageBox.Show("Something went wrong please try again");
-
+                    MessageBox.Show("Not enough OSRS gold");
+                    updateRs3MoneyText();
                 }
+
             }
-
-
-
-
-
 
         }
 
@@ -152,8 +164,8 @@ namespace moneyswapper
 
                 if (TbRs3Money.Text != "")
                 {
-                    SwapperRs3ToOsrs swapper = new SwapperRs3ToOsrs();
-                    (henk.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.transfer1(henk.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
+                    Swapper swapper = new Swapper();
+                    (user.OSRS, transfer.TransferAmount, transfer.SwapRateToOSRS) = swapper.Transfer1(user.OSRS, Convert.ToInt32(TbRs3Money.Text), transfer.SwapRateToOSRS);
                     LbPreviewRs3ToOsrsSwap.Text = transfer.TransferAmount.ToString();
 
                 }
@@ -164,16 +176,16 @@ namespace moneyswapper
 
         public void updateOsrsMoneyText()
         {
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
+            LbOsrsMoney.Text = user.OSRS.ToString();
+            LbRs3Money.Text = user.RS3.ToString();
             TbOsrsMoney.Text = "Osrs amount";
             TbOsrsMoney.ForeColor = Color.LightGray;
             LbPreviewOsrsToRs3Swap.Text = "";
         }
         public void updateRs3MoneyText()
         {
-            LbOsrsMoney.Text = henk.OSRS.ToString();
-            LbRs3Money.Text = henk.RS3.ToString();
+            LbOsrsMoney.Text = user.OSRS.ToString();
+            LbRs3Money.Text = user.RS3.ToString();
             TbRs3Money.Text = "Rs3 amount";
             TbRs3Money.ForeColor = Color.LightGray;
             LbPreviewRs3ToOsrsSwap.Text = "";
@@ -191,9 +203,88 @@ namespace moneyswapper
             TbRs3Money.ForeColor = Color.Black;
         }
 
+        private void tabPage2_Click(object sender, EventArgs e)
+        {
+            TbRs3Money.Text = "Rs3 amount";
+            TbRs3Money.ForeColor = Color.LightGray;
+            TbOsrsMoney.Text = "Osrs amount";
+            TbOsrsMoney.ForeColor = Color.LightGray;
+        }
 
+        private void BtnInlog_Click(object sender, EventArgs e)
+        {
+            UserLogin2();
+
+        }
+
+        private void BtnRegister_Click(object sender, EventArgs e)
+        {
+            tabControl1.SelectedIndex = 2;
+        }
+
+        private void BtnAddUser_Click(object sender, EventArgs e)
+        {
+           
+           
+            if (System.Text.RegularExpressions.Regex.IsMatch(TbOSRSRegisterMoney.Text, "[^0-9]") && System.Text.RegularExpressions.Regex.IsMatch(TbRS3RegisterMoney.Text, "[^0-9]"))
+            {
+
+                clear();
+                MessageBox.Show("wrong input");
+            }
+            else if (TbRegisterEmail.Text != "" && TbPasswordRegister.Text != "" && TbPasswordRegister.Text != "" && TbRS3RegisterMoney.Text != "" && TbOSRSRegisterMoney.Text != "")
+            {
+                container.adduser(
+                TbUsernameRegister.Text,
+                TbPasswordRegister.Text,
+                TbRegisterEmail.Text,
+                Convert.ToInt32(TbRS3RegisterMoney.Text),
+                Convert.ToInt32(TbOSRSRegisterMoney.Text)
+            );
+                MessageBox.Show("You have been registerd, please login");
+                tabControl1.SelectedIndex = 0;
+                clear();
+
+            }
+            else
+            {
+                MessageBox.Show("not all fields are correct");
+            }
+            
+             
+         }
+            
+           
+        void clear()
+        {
+            TbUsernameRegister.Text = TbPasswordRegister.Text = TbRegisterEmail.Text = TbOSRSRegisterMoney.Text = TbRS3RegisterMoney.Text = "";
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(user.OSRS.ToString() + " veel OSRS geldje");
+        }
+
+        private void BtnShowRS3Money_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(user.RS3.ToString() + " veel RS3 geldje");
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void BtnAddProduct_Click(object sender, EventArgs e)
+        {
+           Product_Container product = new Product_Container(new ProductContext());
+            product.addProduct(Convert.ToInt32(TbPrice.Text), Convert.ToInt32(TbQuantity.Text), TbName.Text);
+            
+
+
+
+        }
     }
-
 }
 
 
